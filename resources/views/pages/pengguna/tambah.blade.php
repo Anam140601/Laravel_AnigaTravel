@@ -1,0 +1,131 @@
+@extends('layouts.main')
+@section('content')
+<h1>Pengguna</h1>
+<hr>
+<!-- Allert -->
+
+@if(session('status-alert') == 'peringatan')
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+	<strong>Upps Salah!!</strong> Ada kesalahan bro, data gagal disimpan.
+	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		<span aria-hiddem="true">&times;</span>
+	</button>
+</div>
+@endif
+
+
+@if(session('status-alert') == 'gagal')
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+	<strong>Sorry bro!!</strong> Data gagal dihapus dari database.
+	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		<span aria-hiddem="true">&times;</span>
+	</button>
+</div>
+@endif
+
+<div class="card border-info mb-3">
+	<div class="card-header bg-info text-white">Tambah Pengguna</div>
+	<div class="card-body">
+		<form method="post" action="{{ route('pengguna.simpan') }}">
+		{{ csrf_field()}}	
+			<div class="form-group">
+				<label>Nama</label>
+				<div class="row">
+					<div class="col-sm-6">
+						<input type="text" name="nama" class="form-control {{ $errors->has('nama')?'is-invalid':'' }}" value="{{ Request::old('nama') }}" require autofocus>
+
+						@if( $errors->has('nama') )
+							<div class="invalid-feedback">
+								{{ $errors->first('nama') }}
+							</div>
+						@endif
+					</div>
+				</div>
+				<small>
+					Panjang karakter 5-50, contoh : wkwkwk land
+				</small>
+			</div>
+
+			<div class="form-group">
+				<label>Username</label>
+				<div class="row">
+					<div class="col-sm-6">
+						<input type="text" name="username" class="form-control {{ $errors->has('username')?'is-invalid':'' }}" value="{{ Request::old('username') }}" require autofocus>
+
+						@if( $errors->has('username') )
+							<div class="invalid-feedback">
+								{{ $errors->first('username') }}
+							</div>
+						@endif
+					</div>
+				</div>
+				<small>
+					Panjang karakter 5-50, dan tidak boleh ada spasi, <br> 
+					Contoh : wkwkwkland, wkwkwk_land, wkwkwk-land
+				</small>
+			</div>
+
+			<div class="form-group">
+				<label>Email</label>
+				<div class="row">
+					<div class="col-sm-6">
+						<input type="email" name="email" class="form-control {{ $errors->has('email')?'is-invalid':'' }}" value="{{ Request::old('email') }}" require>
+
+						@if( $errors->has('email') )
+							<div class="invalid-feedback">
+								{{ $errors->first('email') }}
+							</div>
+						@endif
+					</div>
+				</div>
+				<small>
+					Panjang karakter 15-50, contoh : wkwkwk@gmail.com
+				</small>
+			</div>
+
+			<div class="form-group">
+				<label>Password</label>
+				<div class="row">
+					<div class="col-sm-6">
+						<input type="password" name="password" class="form-control {{ $errors->has('password')?'is-invalid':'' }}" require>
+						@if( $errors->has('password') )
+							<div class="invalid-feedback">
+								{{ $errors->first('password') }}
+							</div>
+						@endif
+					</div>
+				</div>
+				<small>
+					Panjang karakter min 6
+				</small>
+			</div>
+
+			<div class="form-group">
+				<label>Konfirmasi Password</label>
+				<div class="row">
+					<div class="col-sm-6">
+						<input type="password" name="repassword" class="form-control {{ $errors->has('repassword')?'is-invalid':'' }}" require>
+						@if( $errors->has('repassword') )
+							<div class="invalid-feedback">
+								{{ $errors->first('repassword') }}
+							</div>
+						@endif
+					</div>
+				</div> 
+			</div>
+
+			<hr>
+			<div class="form-group text-right">
+				<p>
+					Pilih "Save" jika ingin menimpan data diatas.
+				</p>
+				<a href="{{ route('pengguna.data') }}" class="btn btn-secondary">Cancel</a>
+				<button type="submit" class="btn btn-info">Save</button>
+			</div>
+
+		</form>
+	</div>
+	<div class="card-footer bg-info"></div>
+</div>
+
+@endsection
